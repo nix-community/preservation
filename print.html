@@ -149,7 +149,7 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://github.com/willibutz/preservation" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/nix-community/preservation" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
 
@@ -183,7 +183,7 @@
 <p>Inspired and heavily influenced by <a href="https://github.com/nix-community/impermanence">impermanence</a> but not
 meant to be a drop-in replacement.</p>
 <h2 id="documentation"><a class="header" href="#documentation">Documentation</a></h2>
-<p>Docs are available at <a href="https://willibutz.github.io/preservation">https://willibutz.github.io/preservation</a></p>
+<p>Docs are available at <a href="https://nix-community.github.io/preservation">https://nix-community.github.io/preservation</a></p>
 <h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
 <p>Requires at least nixos-24.11</p>
 <h2 id="why"><a class="header" href="#why">Why?</a></h2>
@@ -207,7 +207,7 @@ boolean</p>
 <code>true</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveat"><a class="header" href="#preservationpreserveat">preservation.preserveAt</a></h2>
 <p>Specify a set of locations and the corresponding state that
@@ -248,7 +248,7 @@ attribute set of (submodule)</p>
 </code></pre>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectories"><a class="header" href="#preservationpreserveatnamedirectories">preservation.preserveAt.&lt;name&gt;.directories</a></h2>
 <p>Specify a list of directories that should be preserved.
@@ -264,7 +264,7 @@ list of ((submodule) or string convertible to it)</p>
 </code></pre>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesconfigureparent"><a class="header" href="#preservationpreserveatnamedirectoriesconfigureparent">preservation.preserveAt.&lt;name&gt;.directories.*.configureParent</a></h2>
 <p>Specify whether the parent directory of this directory shall be configured with
@@ -283,7 +283,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriescreatelinktarget"><a class="header" href="#preservationpreserveatnamedirectoriescreatelinktarget">preservation.preserveAt.&lt;name&gt;.directories.*.createLinkTarget</a></h2>
 <p>Only used when <code>how</code> is set to <code>symlink</code>.</p>
@@ -295,7 +295,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesdirectory"><a class="header" href="#preservationpreserveatnamedirectoriesdirectory">preservation.preserveAt.&lt;name&gt;.directories.*.directory</a></h2>
 <p>Specify the path to the directory that should be preserved.</p>
@@ -303,7 +303,7 @@ boolean</p>
 string</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesgroup"><a class="header" href="#preservationpreserveatnamedirectoriesgroup">preservation.preserveAt.&lt;name&gt;.directories.*.group</a></h2>
 <p>Specify the group that owns the directory.</p>
@@ -313,7 +313,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectorieshow"><a class="header" href="#preservationpreserveatnamedirectorieshow">preservation.preserveAt.&lt;name&gt;.directories.*.how</a></h2>
 <p>Specify how this directory should be preserved.</p>
@@ -323,7 +323,7 @@ one of “bindmount”, “symlink”</p>
 <code>"bindmount"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesininitrd"><a class="header" href="#preservationpreserveatnamedirectoriesininitrd">preservation.preserveAt.&lt;name&gt;.directories.*.inInitrd</a></h2>
 <p>Whether to prepare preservation of this directory in initrd.</p>
@@ -336,7 +336,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesmode"><a class="header" href="#preservationpreserveatnamedirectoriesmode">preservation.preserveAt.&lt;name&gt;.directories.*.mode</a></h2>
 <p>Specify the access mode of the directory.
@@ -347,7 +347,7 @@ string</p>
 <code>"0755"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesmountoptions"><a class="header" href="#preservationpreserveatnamedirectoriesmountoptions">preservation.preserveAt.&lt;name&gt;.directories.*.mountOptions</a></h2>
 <p>Specify a list of mount options that should be used for this directory.
@@ -359,7 +359,7 @@ See also <code>fstrim(8)</code>.</p>
 list of ((submodule) or string convertible to it)</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesmountoptionsname"><a class="header" href="#preservationpreserveatnamedirectoriesmountoptionsname">preservation.preserveAt.&lt;name&gt;.directories.*.mountOptions.*.name</a></h2>
 <p>Specify the name of the mount option.</p>
@@ -369,7 +369,7 @@ string</p>
 <code>"bind"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesmountoptionsvalue"><a class="header" href="#preservationpreserveatnamedirectoriesmountoptionsvalue">preservation.preserveAt.&lt;name&gt;.directories.*.mountOptions.*.value</a></h2>
 <p>Optionally specify a value for the mount option.</p>
@@ -379,7 +379,7 @@ null or string</p>
 <code>null</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesparentgroup"><a class="header" href="#preservationpreserveatnamedirectoriesparentgroup">preservation.preserveAt.&lt;name&gt;.directories.*.parent.group</a></h2>
 <p>Specify the group that owns the parent directory of this file.</p>
@@ -389,7 +389,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesparentmode"><a class="header" href="#preservationpreserveatnamedirectoriesparentmode">preservation.preserveAt.&lt;name&gt;.directories.*.parent.mode</a></h2>
 <p>Specify the access mode of the parent directory of this file.
@@ -400,7 +400,7 @@ string</p>
 <code>"0755"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesparentuser"><a class="header" href="#preservationpreserveatnamedirectoriesparentuser">preservation.preserveAt.&lt;name&gt;.directories.*.parent.user</a></h2>
 <p>Specify the user that owns the parent directory of this file.</p>
@@ -410,7 +410,7 @@ string</p>
 <code>"root"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamedirectoriesuser"><a class="header" href="#preservationpreserveatnamedirectoriesuser">preservation.preserveAt.&lt;name&gt;.directories.*.user</a></h2>
 <p>Specify the user that owns the directory.</p>
@@ -420,7 +420,7 @@ string</p>
 <code>"root"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefiles"><a class="header" href="#preservationpreserveatnamefiles">preservation.preserveAt.&lt;name&gt;.files</a></h2>
 <p>Specify a list of files that should be preserved.
@@ -443,7 +443,7 @@ list of ((submodule) or string convertible to it)</p>
 </code></pre>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesconfigureparent"><a class="header" href="#preservationpreserveatnamefilesconfigureparent">preservation.preserveAt.&lt;name&gt;.files.*.configureParent</a></h2>
 <p>Specify whether the parent directory of this file shall be configured with
@@ -462,7 +462,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilescreatelinktarget"><a class="header" href="#preservationpreserveatnamefilescreatelinktarget">preservation.preserveAt.&lt;name&gt;.files.*.createLinkTarget</a></h2>
 <p>Only used when <code>how</code> is set to <code>symlink</code>.</p>
@@ -474,7 +474,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesfile"><a class="header" href="#preservationpreserveatnamefilesfile">preservation.preserveAt.&lt;name&gt;.files.*.file</a></h2>
 <p>Specify the path to the file that should be preserved.</p>
@@ -482,7 +482,7 @@ boolean</p>
 string</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesgroup"><a class="header" href="#preservationpreserveatnamefilesgroup">preservation.preserveAt.&lt;name&gt;.files.*.group</a></h2>
 <p>Specify the group that owns the file.</p>
@@ -492,7 +492,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefileshow"><a class="header" href="#preservationpreserveatnamefileshow">preservation.preserveAt.&lt;name&gt;.files.*.how</a></h2>
 <p>Specify how this file should be preserved:</p>
@@ -513,7 +513,7 @@ one of “bindmount”, “symlink”</p>
 <code>"bindmount"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesininitrd"><a class="header" href="#preservationpreserveatnamefilesininitrd">preservation.preserveAt.&lt;name&gt;.files.*.inInitrd</a></h2>
 <p>Whether to prepare preservation of this file in the initrd.</p>
@@ -528,7 +528,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesmode"><a class="header" href="#preservationpreserveatnamefilesmode">preservation.preserveAt.&lt;name&gt;.files.*.mode</a></h2>
 <p>Specify the access mode of the file.
@@ -539,7 +539,7 @@ string</p>
 <code>"0644"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesmountoptions"><a class="header" href="#preservationpreserveatnamefilesmountoptions">preservation.preserveAt.&lt;name&gt;.files.*.mountOptions</a></h2>
 <p>Specify a list of mount options that should be used for this file.
@@ -550,7 +550,7 @@ use <code>mkForce</code> to override this if needed.</p>
 list of ((submodule) or string convertible to it)</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesmountoptionsname"><a class="header" href="#preservationpreserveatnamefilesmountoptionsname">preservation.preserveAt.&lt;name&gt;.files.*.mountOptions.*.name</a></h2>
 <p>Specify the name of the mount option.</p>
@@ -560,7 +560,7 @@ string</p>
 <code>"bind"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesmountoptionsvalue"><a class="header" href="#preservationpreserveatnamefilesmountoptionsvalue">preservation.preserveAt.&lt;name&gt;.files.*.mountOptions.*.value</a></h2>
 <p>Optionally specify a value for the mount option.</p>
@@ -570,7 +570,7 @@ null or string</p>
 <code>null</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesparentgroup"><a class="header" href="#preservationpreserveatnamefilesparentgroup">preservation.preserveAt.&lt;name&gt;.files.*.parent.group</a></h2>
 <p>Specify the group that owns the parent directory of this file.</p>
@@ -580,7 +580,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesparentmode"><a class="header" href="#preservationpreserveatnamefilesparentmode">preservation.preserveAt.&lt;name&gt;.files.*.parent.mode</a></h2>
 <p>Specify the access mode of the parent directory of this file.
@@ -591,7 +591,7 @@ string</p>
 <code>"0755"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesparentuser"><a class="header" href="#preservationpreserveatnamefilesparentuser">preservation.preserveAt.&lt;name&gt;.files.*.parent.user</a></h2>
 <p>Specify the user that owns the parent directory of this file.</p>
@@ -601,7 +601,7 @@ string</p>
 <code>"root"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamefilesuser"><a class="header" href="#preservationpreserveatnamefilesuser">preservation.preserveAt.&lt;name&gt;.files.*.user</a></h2>
 <p>Specify the user that owns the file.</p>
@@ -611,7 +611,7 @@ string</p>
 <code>"root"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnamepersistentstoragepath"><a class="header" href="#preservationpreserveatnamepersistentstoragepath">preservation.preserveAt.&lt;name&gt;.persistentStoragePath</a></h2>
 <p>Specify the location at which the <code>directories</code>, <code>files</code>,
@@ -623,7 +623,7 @@ path</p>
 <code>"‹name›"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusers"><a class="header" href="#preservationpreserveatnameusers">preservation.preserveAt.&lt;name&gt;.users</a></h2>
 <p>Specify a set of users with corresponding files and directories that
@@ -649,7 +649,7 @@ attribute set of (submodule)</p>
 </code></pre>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectories"><a class="header" href="#preservationpreserveatnameusersnamedirectories">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories</a></h2>
 <p>Specify a list of directories that should be preserved for this user.
@@ -665,7 +665,7 @@ list of ((submodule) or string convertible to it)</p>
 </code></pre>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesconfigureparent"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesconfigureparent">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.configureParent</a></h2>
 <p>Specify whether the parent directory of this directory shall be configured with
@@ -684,7 +684,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriescreatelinktarget"><a class="header" href="#preservationpreserveatnameusersnamedirectoriescreatelinktarget">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.createLinkTarget</a></h2>
 <p>Only used when <code>how</code> is set to <code>symlink</code>.</p>
@@ -696,7 +696,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesdirectory"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesdirectory">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.directory</a></h2>
 <p>Specify the path to the directory that should be preserved.</p>
@@ -704,7 +704,7 @@ boolean</p>
 string</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesgroup"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesgroup">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.group</a></h2>
 <p>Specify the group that owns the directory.</p>
@@ -714,7 +714,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectorieshow"><a class="header" href="#preservationpreserveatnameusersnamedirectorieshow">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.how</a></h2>
 <p>Specify how this directory should be preserved.</p>
@@ -724,7 +724,7 @@ one of “bindmount”, “symlink”</p>
 <code>"bindmount"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesininitrd"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesininitrd">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.inInitrd</a></h2>
 <p>Whether to prepare preservation of this directory in initrd.</p>
@@ -737,7 +737,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesmode"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesmode">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.mode</a></h2>
 <p>Specify the access mode of the directory.
@@ -748,7 +748,7 @@ string</p>
 <code>"0755"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesmountoptions"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesmountoptions">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.mountOptions</a></h2>
 <p>Specify a list of mount options that should be used for this directory.
@@ -760,7 +760,7 @@ See also <code>fstrim(8)</code>.</p>
 list of ((submodule) or string convertible to it)</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesmountoptionsname"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesmountoptionsname">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.mountOptions.*.name</a></h2>
 <p>Specify the name of the mount option.</p>
@@ -770,7 +770,7 @@ string</p>
 <code>"bind"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesmountoptionsvalue"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesmountoptionsvalue">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.mountOptions.*.value</a></h2>
 <p>Optionally specify a value for the mount option.</p>
@@ -780,7 +780,7 @@ null or string</p>
 <code>null</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesparentgroup"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesparentgroup">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.parent.group</a></h2>
 <p>Specify the group that owns the parent directory of this file.</p>
@@ -790,7 +790,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesparentmode"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesparentmode">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.parent.mode</a></h2>
 <p>Specify the access mode of the parent directory of this file.
@@ -801,7 +801,7 @@ string</p>
 <code>"0755"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesparentuser"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesparentuser">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.parent.user</a></h2>
 <p>Specify the user that owns the parent directory of this file.</p>
@@ -811,7 +811,7 @@ string</p>
 <code>"‹user›"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamedirectoriesuser"><a class="header" href="#preservationpreserveatnameusersnamedirectoriesuser">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.directories.*.user</a></h2>
 <p>Specify the user that owns the directory.</p>
@@ -821,7 +821,7 @@ string</p>
 <code>"‹user›"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefiles"><a class="header" href="#preservationpreserveatnameusersnamefiles">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files</a></h2>
 <p>Specify a list of files that should be preserved for this user.
@@ -841,7 +841,7 @@ list of ((submodule) or string convertible to it)</p>
 </code></pre>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesconfigureparent"><a class="header" href="#preservationpreserveatnameusersnamefilesconfigureparent">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.configureParent</a></h2>
 <p>Specify whether the parent directory of this file shall be configured with
@@ -860,7 +860,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilescreatelinktarget"><a class="header" href="#preservationpreserveatnameusersnamefilescreatelinktarget">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.createLinkTarget</a></h2>
 <p>Only used when <code>how</code> is set to <code>symlink</code>.</p>
@@ -872,7 +872,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesfile"><a class="header" href="#preservationpreserveatnameusersnamefilesfile">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.file</a></h2>
 <p>Specify the path to the file that should be preserved.</p>
@@ -880,7 +880,7 @@ boolean</p>
 string</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesgroup"><a class="header" href="#preservationpreserveatnameusersnamefilesgroup">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.group</a></h2>
 <p>Specify the group that owns the file.</p>
@@ -890,7 +890,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefileshow"><a class="header" href="#preservationpreserveatnameusersnamefileshow">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.how</a></h2>
 <p>Specify how this file should be preserved:</p>
@@ -911,7 +911,7 @@ one of “bindmount”, “symlink”</p>
 <code>"bindmount"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesininitrd"><a class="header" href="#preservationpreserveatnameusersnamefilesininitrd">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.inInitrd</a></h2>
 <p>Whether to prepare preservation of this file in the initrd.</p>
@@ -926,7 +926,7 @@ boolean</p>
 <code>false</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesmode"><a class="header" href="#preservationpreserveatnameusersnamefilesmode">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.mode</a></h2>
 <p>Specify the access mode of the file.
@@ -937,7 +937,7 @@ string</p>
 <code>"0644"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesmountoptions"><a class="header" href="#preservationpreserveatnameusersnamefilesmountoptions">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.mountOptions</a></h2>
 <p>Specify a list of mount options that should be used for this file.
@@ -948,7 +948,7 @@ use <code>mkForce</code> to override this if needed.</p>
 list of ((submodule) or string convertible to it)</p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesmountoptionsname"><a class="header" href="#preservationpreserveatnameusersnamefilesmountoptionsname">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.mountOptions.*.name</a></h2>
 <p>Specify the name of the mount option.</p>
@@ -958,7 +958,7 @@ string</p>
 <code>"bind"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesmountoptionsvalue"><a class="header" href="#preservationpreserveatnameusersnamefilesmountoptionsvalue">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.mountOptions.*.value</a></h2>
 <p>Optionally specify a value for the mount option.</p>
@@ -968,7 +968,7 @@ null or string</p>
 <code>null</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesparentgroup"><a class="header" href="#preservationpreserveatnameusersnamefilesparentgroup">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.parent.group</a></h2>
 <p>Specify the group that owns the parent directory of this file.</p>
@@ -978,7 +978,7 @@ string</p>
 <code>"config.users.users.\${defaultOwner}.group"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesparentmode"><a class="header" href="#preservationpreserveatnameusersnamefilesparentmode">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.parent.mode</a></h2>
 <p>Specify the access mode of the parent directory of this file.
@@ -989,7 +989,7 @@ string</p>
 <code>"0755"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesparentuser"><a class="header" href="#preservationpreserveatnameusersnamefilesparentuser">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.parent.user</a></h2>
 <p>Specify the user that owns the parent directory of this file.</p>
@@ -999,7 +999,7 @@ string</p>
 <code>"‹user›"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamefilesuser"><a class="header" href="#preservationpreserveatnameusersnamefilesuser">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.files.*.user</a></h2>
 <p>Specify the user that owns the file.</p>
@@ -1009,7 +1009,7 @@ string</p>
 <code>"‹user›"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnamehome"><a class="header" href="#preservationpreserveatnameusersnamehome">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.home</a></h2>
 <p>Specify the path to the user’s home directory.</p>
@@ -1019,7 +1019,7 @@ path, not containing newlines or colons</p>
 <code>"config.users.users.\${name}.home"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <h2 id="preservationpreserveatnameusersnameusername"><a class="header" href="#preservationpreserveatnameusersnameusername">preservation.preserveAt.&lt;name&gt;.users.&lt;name&gt;.username</a></h2>
 <p>Specify the user for which the <code>directories</code> and <code>files</code>
@@ -1030,7 +1030,7 @@ string, not containing newlines or colons</p>
 <code>"‹user›"</code></p>
 <p><em>Declared by:</em></p>
 <ul>
-<li><a href="https://github.com/willibutz/preservation/blob/main/options.nix">options.nix</a></li>
+<li><a href="https://github.com/nix-community/preservation/blob/main/options.nix">options.nix</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
 <p>See <a href="./configuration-options.html">Configuration Options</a> for all available options.</p>
