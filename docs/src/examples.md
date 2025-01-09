@@ -169,13 +169,9 @@ mount created by system to the persistent volume.
 
   # Create some directories with custom permissions.
   #
-  # In this configuration the path `/home/butz/.local` is not an immediate parent
-  # of any persisted file, so it would be created with the systemd-tmpfiles default
-  # ownership `root:root` and mode `0755`. This would mean that the user `butz`
-  # could not create other files or directories inside `/home/butz/.local`.
-  #
-  # Therefore systemd-tmpfiles is used to prepare such directories with
-  # appropriate permissions.
+  # This is not necessary for user-specific files, as intermediate components
+  # of such paths (up to and including the home directory) are created with
+  # the user's ownership and mode `0755`.
   #
   # Note that immediate parent directories of persisted files can also be
   # configured with ownership and permissions from the `parent` settings if

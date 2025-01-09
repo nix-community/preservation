@@ -47,6 +47,18 @@ rec {
     in
     if len < 1 then "/" else concatPaths ([ "/" ] ++ (lib.lists.sublist 0 (len - 1) parts));
 
+  # get the parent directories of an absolute path, except for the root directory
+  parentDirectories =
+    path:
+    with lib.strings;
+    assert "/" == (builtins.substring 0 1 path);
+    let
+      parts = builtins.filter (s: builtins.isString s && s != "") (builtins.split "/" path);
+      len = builtins.length parts;
+      paths = builtins.genList (n: concatPaths ([ "/" ] ++ (lib.lists.take (n + 1) parts))) (len - 1);
+    in
+    builtins.filter (p: p != "") paths;
+
   # retrieves all directories configured in a `preserveAtSubmodule`
   getAllDirectories =
     stateConfig:
@@ -58,6 +70,16 @@ rec {
   getUserDirectories = lib.mapAttrsToList (_: userConfig: userConfig.directories);
   # retrieves the list of files for all users in a `preserveAtSubmodule`
   getUserFiles = lib.mapAttrsToList (_: userConfig: userConfig.files);
+  # creates a list of parent directories for all users in a `preserveAtSubmodule`
+  withUserParentDirs = lib.mapAttrs (
+    _: userConfig:
+    userConfig
+    // {
+      parentDirs =
+        map (d: parentDirectories d.directory) userConfig.directories
+        ++ map (d: parentDirectories d.file) userConfig.files;
+    }
+  );
   # filters a list of files or directories, returns only bindmounts
   onlyBindMounts =
     forInitrd: builtins.filter (conf: conf.how == "bindmount" && conf.inInitrd == forInitrd);
@@ -241,6 +263,60 @@ rec {
     in
     rules;
 
+  # creates extra tmpfiles.d rules for parent directories for all users in a `preserveAtSubmodule`
+  mkTmpfilesRulesExtra =
+    preserveAt: stateConfig:
+    lib.foldlAttrs (
+      state: _: userConfig:
+      let
+        homeDir = userConfig.home;
+        persistentHomeDir = concatPaths [
+          stateConfig.persistentStoragePath
+          homeDir
+        ];
+        excludedDirs = (parentDirectories homeDir) ++ [ homeDir ];
+        user = userConfig.username;
+        group = userConfig._group;
+        mode = userConfig._dirMode;
+      in
+      state
+      ++ [
+        {
+          # home directory on persistent storage
+          "${persistentHomeDir}".d = {
+            inherit user group;
+            mode = userConfig._homeMode;
+          };
+          # home directory on volatile storage is set by system.activationScripts.users
+          # or systemd.tmpfiles.settings.home-directories (when sysusers/userborn is enabled)
+        }
+      ]
+      ++ map (
+        dirs:
+        lib.foldl' (
+          state: dir:
+          let
+            persistentDirPath = concatPaths [
+              stateConfig.persistentStoragePath
+              dir
+            ];
+            volatileDirPath = dir;
+          in
+          state
+          // {
+            # parent directory on persistent storage
+            "${persistentDirPath}".d = {
+              inherit user group mode;
+            };
+            # parent directory on volatile storage
+            "${volatileDirPath}".d = {
+              inherit user group mode;
+            };
+          }
+        ) { } (builtins.filter (d: !(builtins.elem d excludedDirs)) dirs)
+      ) userConfig.parentDirs
+    ) [ ] (withUserParentDirs stateConfig.users);
+
   # creates systemd mount unit configurations from a `preserveAtSubmodule`
   mkMountUnits =
     forInitrd: preserveAt: stateConfig:
@@ -329,5 +405,6 @@ rec {
   mkRegularMountUnits = mkMountUnits false;
   mkInitrdMountUnits = mkMountUnits true;
   mkRegularTmpfilesRules = mkTmpfilesRules false;
+  mkRegularTmpfilesRulesExtra = mkTmpfilesRulesExtra;
   mkInitrdTmpfilesRules = mkTmpfilesRules true;
 }

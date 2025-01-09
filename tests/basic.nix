@@ -182,6 +182,14 @@ in
         for file in all_files:
           check_file(file)
 
+      with subtest("Home directory permissions and ownership"):
+        actual = machine.succeed("stat -c '0%a %U %G' {/state,}${butzHome} | tee /dev/stderr").strip()
+        expected = "0700 butz users\n0700 butz users"
+        assert actual == expected,f"unexpected home directory attributes\nexpected: {expected}\nactual: {actual}"
+        actual = machine.succeed("stat -c '0%a %U %G' {/state,}${butzHome}/.config | tee /dev/stderr").strip()
+        expected = "0755 butz users\n0755 butz users"
+        assert actual == expected,f"unexpected home directory attributes\nexpected: {expected}\nactual: {actual}"
+
       with subtest("Files preserved across reboots"):
         # write something in one of the preserved files
         teststring = "foobarbaz"

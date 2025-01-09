@@ -53,7 +53,9 @@ to be preserved, and optionally their immediate parent directories (via `configu
 the `parent` options).
 
 All missing components of a preserved path that do not already exist, are created by
-systemd-tmpfiles with default ownership `root:root` and mode `0755`.
+systemd-tmpfiles with default ownership `root:root` and mode `0755`, except for user-specific
+paths, where intermediate components (up to and including the home directory) are created
+with the user's ownership and mode `0755`.
 
 Should such directories require different ownership or mode, the intended way to provision them
 is directly via systemd-tmpfiles.

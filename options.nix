@@ -72,6 +72,8 @@ let
 
             By default, missing parent directories are always created with ownership
             `root:root` and mode `0755`, as described in {manpage}`tmpfiles.d(5)`.
+            However, if the parent directories belong to a user-specific directory,
+            they are created with the user's ownership and mode `0755`.
 
             Ownership and mode may be configured through the options
             {option}`parent.user`,
@@ -210,6 +212,8 @@ let
 
             By default, missing parent directories are always created with ownership
             `root:root` and mode `0755`, as described in {manpage}`tmpfiles.d(5)`.
+            However, if the parent directories belong to a user-specific file,
+            they are created with the user's ownership and mode `0755`.
 
             Ownership and mode may be configured through the options
             {option}`parent.user`,
@@ -309,6 +313,24 @@ let
           description = ''
             Specify the path to the user's home directory.
           '';
+        };
+        _homeMode = lib.mkOption {
+          internal = true;
+          readOnly = true;
+          type = lib.types.str;
+          default = config.users.users.${name}.homeMode;
+        };
+        _group = lib.mkOption {
+          internal = true;
+          readOnly = true;
+          type = lib.types.str;
+          default = config.users.users.${name}.group;
+        };
+        _dirMode = lib.mkOption {
+          internal = true;
+          readOnly = true;
+          type = lib.types.str;
+          default = "0755";
         };
         directories = lib.mkOption {
           type =
