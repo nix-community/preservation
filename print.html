@@ -1296,6 +1296,11 @@ in place. This means that the user must define:</p>
 <h3 id="global-enable-option"><a class="header" href="#global-enable-option">Global <code>enable</code> option</a></h3>
 <p>Preservation uses a global <code>enable</code> option, impermanence does not.</p>
 <p>For thoughts on the <code>enable</code> option, see the discussion at <a href="https://github.com/nix-community/impermanence/pull/171">https://github.com/nix-community/impermanence/pull/171</a> and for available configuration options see <a href="./configuration-options.html">Configuration Options</a>.</p>
+<h3 id="no-generic-hidemounts-option"><a class="header" href="#no-generic-hidemounts-option">No generic <code>hideMounts</code> option</a></h3>
+<p>Preservation does not provide the same <code>hideMounts</code> option as impermanence, which would set the mount option <code>x-gvfs-hide</code> for bind-mounts.
+Instead, preservation allows for the configuration of arbitrary mount options that are propagated to all bind-mounts, both on the top level
+of a preserved prefix, and on the per-user level. This can be done via <code>commonMountOptions</code> and would for example enable users to choose
+between <code>x-gvfs-hide</code> and <code>x-gdu.hide</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="migration-from-impermanence-to-preservation"><a class="header" href="#migration-from-impermanence-to-preservation">Migration from impermanence to Preservation</a></h1>
 <p>This section lists individual differences between impermanence and
 Preservation, to better understand them in context of a complete configuration
