@@ -7,6 +7,7 @@ let
     mkRegularMountUnits
     mkInitrdMountUnits
     mkRegularTmpfilesRules
+    mkRegularTmpfilesRulesExtra
     mkInitrdTmpfilesRules
     ;
 in
@@ -43,6 +44,10 @@ in
       };
       tmpfiles.settings.preservation = lib.mkMerge (
         lib.flatten (lib.mapAttrsToList mkRegularTmpfilesRules cfg.preserveAt)
+      );
+      # use a separate, lower priority file for extra tmpfiles rules
+      tmpfiles.settings.preservationExtra = lib.mkMerge (
+        lib.flatten (lib.mapAttrsToList mkRegularTmpfilesRulesExtra cfg.preserveAt)
       );
       mounts = lib.flatten (lib.mapAttrsToList mkRegularMountUnits cfg.preserveAt);
     };
