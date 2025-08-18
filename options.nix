@@ -37,7 +37,14 @@ let
           ];
           default = "bindmount";
           description = ''
-            Specify how this directory should be preserved.
+            Specify how this directory should be preserved:
+
+            1. Either a directory is placed both on the volatile and on
+            the persistent volume, with a bind mount from the former to
+            the latter.
+
+            2. Or a symlink is created on the volatile volume, pointing
+            to the corresponding location on the persistent volume.
           '';
         };
         user = lib.mkOption {
