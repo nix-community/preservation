@@ -27,6 +27,7 @@ in
           ];
           files = [
             { file = "/etc/wpa_supplicant.conf"; how = "symlink"; }
+            { file = "/etc/localtime"; how = "copy"; }
             # some files need to be prepared very early, machine-id is one such case
             { file = "/etc/machine-id"; inInitrd = true; }
           ];
@@ -133,6 +134,14 @@ in
             machine.succeed(f"mountpoint {path}")
 
             # check permissions and ownership
+            actual = machine.succeed(f"stat -c '0%a %U %G' {path} | tee /dev/stderr").strip()
+            expected = "{} {} {}".format(config["mode"],config["user"],config["group"])
+            assert actual == expected,f"unexpected file attributes\nexpected: {expected}\nactual: {actual}"
+
+          case "copy":
+            # check that file exists
+            machine.succeed(f"test -e {path}")
+
             actual = machine.succeed(f"stat -c '0%a %U %G' {path} | tee /dev/stderr").strip()
             expected = "{} {} {}".format(config["mode"],config["user"],config["group"])
             assert actual == expected,f"unexpected file attributes\nexpected: {expected}\nactual: {actual}"

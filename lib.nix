@@ -47,6 +47,9 @@ rec {
     in
     if len < 1 then "/" else concatPaths ([ "/" ] ++ (lib.lists.sublist 0 (len - 1) parts));
 
+  # a rough approximation of `systemd-escape`
+  systemdEscape = builtins.replaceStrings ["/"] ["-"];
+
   # retrieves all directories configured in a `preserveAtSubmodule`
   getAllDirectories =
     stateConfig:
@@ -61,6 +64,9 @@ rec {
   # filters a list of files or directories, returns only bindmounts
   onlyBindMounts =
     forInitrd: builtins.filter (conf: conf.how == "bindmount" && conf.inInitrd == forInitrd);
+  # filters a list of files or directories, returns only copies
+  onlyCopies =
+    forInitrd: builtins.filter (conf: conf.how == "copy" && conf.inInitrd == forInitrd);
   # filters a list of files or directories, returns only symlinks
   onlySymLinks =
     forInitrd: builtins.filter (conf: conf.how == "symlink" && conf.inInitrd == forInitrd);
@@ -71,14 +77,18 @@ rec {
     let
       allDirectories = getAllDirectories stateConfig;
       allFiles = getAllFiles stateConfig;
-      mountedDirectories = onlyBindMounts forInitrd allDirectories;
-      mountedFiles = onlyBindMounts forInitrd allFiles;
+      copiedOrMountedDirectories =
+        onlyBindMounts forInitrd allDirectories
+          ++ onlyCopies forInitrd allDirectories;
+      copiedOrMountedFiles =
+        onlyBindMounts forInitrd allFiles
+          ++ onlyCopies forInitrd allFiles;
       symlinkedDirectories = onlySymLinks forInitrd allDirectories;
       symlinkedFiles = onlySymLinks forInitrd allFiles;
 
       prefix = if forInitrd then "/sysroot" else "/";
 
-      mountedDirRules = map (
+      copiedOrMountedDirRules = map (
         dirConfig:
         let
           persistentDirPath = concatPaths [
@@ -111,9 +121,9 @@ rec {
             inherit (dirConfig.parent) user group mode;
           };
         }
-      ) mountedDirectories;
+      ) copiedOrMountedDirectories;
 
-      mountedFileRules = map (
+      copiedOrMountedFileRules = map (
         fileConfig:
         let
           persistentFilePath = concatPaths [
@@ -153,7 +163,7 @@ rec {
             inherit (fileConfig.parent) user group mode;
           };
         }
-      ) mountedFiles;
+      ) copiedOrMountedFiles;
 
       symlinkedDirRules = map (
         dirConfig:
@@ -237,7 +247,7 @@ rec {
         }
       ) symlinkedFiles;
 
-      rules = mountedDirRules ++ symlinkedDirRules ++ mountedFileRules ++ symlinkedFileRules;
+      rules = copiedOrMountedDirRules ++ symlinkedDirRules ++ copiedOrMountedFileRules ++ symlinkedFileRules;
     in
     rules;
 
@@ -325,7 +335,88 @@ rec {
     in
     mountUnits;
 
+  mkCopyServices =
+    forInitrd: preserveAt: stateConfig:
+    let
+      allDirectories = getAllDirectories stateConfig;
+      allFiles = getAllFiles stateConfig;
+      copiedDirectories = onlyCopies forInitrd allDirectories;
+      copiedFiles = onlyCopies forInitrd allFiles;
+
+      prefix = if forInitrd then "/sysroot" else "/";
+      systemdTarget = if forInitrd then [
+        "initrd-preservation.target"
+      ] else [
+        "preservation.target"
+      ];
+
+      directoryCopyServices = map (directoryConfig:
+        let
+            persistentDirPath = concatPaths [
+              prefix
+              stateConfig.persistentStoragePath
+              directoryConfig.directory
+            ];
+            volatileDirPath = concatPaths [
+              prefix
+              directoryConfig.directory
+            ];
+        in lib.nameValuePair "persist-${systemdEscape volatileDirPath}" {
+          description = "Persist ${volatileDirPath}";
+          wantedBy = systemdTarget;
+          before = systemdTarget;
+          unitConfig.RequiresMountsFor = concatPaths [
+            prefix
+            stateConfig.persistentStoragePath
+          ];
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = [
+              "/usr/bin/rm -r ${volatileDirPath}"
+              "/usr/bin/cp -r ${persistentDirPath} ${volatileDirPath}"
+            ];
+          } // lib.optionalAttrs directoryConfig.copyBack {
+            RemainAfterExit = true;
+            ExecStop = [
+              "/usr/bin/rm -r ${persistentDirPath}"
+              "/usr/bin/cp -r ${volatileDirPath} ${persistentDirPath}"
+            ];
+          };
+        }) copiedDirectories;
+
+      fileCopyServices = map (fileConfig:
+        let
+            persistentFilePath = concatPaths [
+              prefix
+              stateConfig.persistentStoragePath
+              fileConfig.file
+            ];
+            volatileFilePath = concatPaths [
+              prefix
+              fileConfig.file
+            ];
+        in lib.nameValuePair "persist-${systemdEscape volatileFilePath}" {
+          description = "Persist ${volatileFilePath}";
+          wantedBy = systemdTarget;
+          before = systemdTarget;
+          unitConfig.RequiresMountsFor = concatPaths [
+            prefix
+            stateConfig.persistentStoragePath
+          ];
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = "/usr/bin/cp --no-dereference ${persistentFilePath} ${volatileFilePath}";
+          } // lib.optionalAttrs fileConfig.copyBack {
+            RemainAfterExit = true;
+            ExecStop = "/usr/bin/cp --no-dereference ${volatileFilePath} ${persistentFilePath}";
+          };
+        }) copiedFiles;
+    in
+    fileCopyServices ++ directoryCopyServices;
+
   # aliases to avoid the use of a nameless bool outside this lib
+  mkRegularCopyServices = mkCopyServices false;
+  mkInitrdCopyServices = mkCopyServices true;
   mkRegularMountUnits = mkMountUnits false;
   mkInitrdMountUnits = mkMountUnits true;
   mkRegularTmpfilesRules = mkTmpfilesRules false;

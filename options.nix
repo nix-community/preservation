@@ -33,6 +33,7 @@ let
         how = lib.mkOption {
           type = lib.types.enum [
             "bindmount"
+            "copy"
             "symlink"
           ];
           default = "bindmount";
@@ -45,6 +46,11 @@ let
 
             2. Or a symlink is created on the volatile volume, pointing
             to the corresponding location on the persistent volume.
+
+            3. Or the directory is copied onto the volatile volume on
+            startup and copied from the volatile onto the persistent
+            volume on shutdown. Note that this method fails to persist
+            the file when the system crashes.
           '';
         };
         user = lib.mkOption {
@@ -132,6 +138,14 @@ let
             and permissions as target of the symlink.
           '';
         };
+        copyBack = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = ''
+            Whether to copy the directory back to the persistent storage at
+            shutdown.
+          '';
+        };
         inInitrd = lib.mkOption {
           type = lib.types.bool;
           default = false;
@@ -171,6 +185,7 @@ let
         how = lib.mkOption {
           type = lib.types.enum [
             "bindmount"
+            "copy"
             "symlink"
           ];
           default = "bindmount";
@@ -183,6 +198,11 @@ let
 
             2. Or a symlink is created on the volatile volume, pointing
             to the corresponding location on the persistent volume.
+
+            3. Or the file is copied onto the volatile volume on startup
+            and copied from the volatile onto the persistent volume on
+            shutdown. Note that this method fails to persist the file
+            when the system crashes.
           '';
         };
         user = lib.mkOption {
@@ -267,6 +287,13 @@ let
 
             Specify whether to create an empty file with the specified ownership
             and permissions as target of the symlink.
+          '';
+        };
+        copyBack = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = ''
+            Whether to copy the file back to the persistent storage at shutdown.
           '';
         };
         inInitrd = lib.mkOption {
@@ -440,6 +467,10 @@ let
               {
                 file = "/etc/wpa_supplicant.conf";
                 how = "symlink";
+              }
+              {
+                file = "/etc/localtime";
+                how = "copy";
               }
               {
                 file = "/etc/machine-id";

@@ -4,6 +4,8 @@ let
   cfg = config.preservation;
 
   inherit (import ./lib.nix { inherit lib; })
+    mkRegularCopyServices
+    mkInitrdCopyServices
     mkRegularMountUnits
     mkInitrdMountUnits
     mkRegularTmpfilesRules
@@ -33,6 +35,9 @@ in
         lib.flatten (lib.mapAttrsToList mkInitrdTmpfilesRules cfg.preserveAt)
       );
       mounts = lib.flatten (lib.mapAttrsToList mkInitrdMountUnits cfg.preserveAt);
+      services = lib.listToAttrs (
+        lib.flatten (lib.mapAttrsToList mkInitrdCopyServices cfg.preserveAt)
+      );
     };
 
     systemd = {
@@ -45,6 +50,9 @@ in
         lib.flatten (lib.mapAttrsToList mkRegularTmpfilesRules cfg.preserveAt)
       );
       mounts = lib.flatten (lib.mapAttrsToList mkRegularMountUnits cfg.preserveAt);
+      services = lib.listToAttrs (
+        lib.flatten (lib.mapAttrsToList mkRegularCopyServices cfg.preserveAt)
+      );
     };
 
   };
