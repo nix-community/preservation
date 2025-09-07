@@ -318,8 +318,24 @@ string</p>
 </ul>
 <h2 id="preservationpreserveatpathdirectorieshow"><a class="header" href="#preservationpreserveatpathdirectorieshow">preservation.preserveAt.&lt;path&gt;.directories.*.how</a></h2>
 <p>Specify how this directory should be preserved.</p>
+<ol>
+<li>
+<p>Either a directory is created both on the volatile and on the
+persistent volume, with a bind mount from the former to the
+latter.</p>
+</li>
+<li>
+<p>Or a symlink is created on the volatile volume, pointing
+to the corresponding location on the persistent volume.</p>
+</li>
+<li>
+<p>Finally the option <code>_intermediate</code> exists to handle directories
+which are supposed to be created on both the volatile and persistent
+volume, but without any preservation of them specifically.</p>
+</li>
+</ol>
 <p><em>Type:</em>
-one of “bindmount”, “symlink”</p>
+one of “bindmount”, “symlink”, “_intermediate”</p>
 <p><em>Default:</em>
 <code>"bindmount"</code></p>
 <p><em>Declared by:</em></p>
@@ -758,8 +774,24 @@ string</p>
 </ul>
 <h2 id="preservationpreserveatpathusersuserdirectorieshow"><a class="header" href="#preservationpreserveatpathusersuserdirectorieshow">preservation.preserveAt.&lt;path&gt;.users.&lt;user&gt;.directories.*.how</a></h2>
 <p>Specify how this directory should be preserved.</p>
+<ol>
+<li>
+<p>Either a directory is created both on the volatile and on the
+persistent volume, with a bind mount from the former to the
+latter.</p>
+</li>
+<li>
+<p>Or a symlink is created on the volatile volume, pointing
+to the corresponding location on the persistent volume.</p>
+</li>
+<li>
+<p>Finally the option <code>_intermediate</code> exists to handle directories
+which are supposed to be created on both the volatile and persistent
+volume, but without any preservation of them specifically.</p>
+</li>
+</ol>
 <p><em>Type:</em>
-one of “bindmount”, “symlink”</p>
+one of “bindmount”, “symlink”, “_intermediate”</p>
 <p><em>Default:</em>
 <code>"bindmount"</code></p>
 <p><em>Declared by:</em></p>
