@@ -217,9 +217,9 @@ used to cause its creation to happen on the persistent volume:</p>
 is called an intermediate path component here. Regarding the ownership and permissions of these
 intermediate path components, the following needs to be considered.</p>
 <h4 id="intermediate-path-components-of-user-specific-files-and-directories"><a class="header" href="#intermediate-path-components-of-user-specific-files-and-directories">Intermediate path components of user-specific files and directories</a></h4>
-<p>Parent directories of a preserved user-specific file or directory that is preserved with the respective
-user as their owner and permissions <code>0755</code>. This is the case for all intermediate path components up
-until, but not including, the user's home directory.</p>
+<p>Parent directories of a preserved user-specific file or directory are created with the respective
+user as their owner and permissions <code>0755</code>. This is the case for all intermediate path components
+up to, but not including, the user's home directory.</p>
 <p><strong>Example</strong></p>
 <p>Consider the following preservation config:</p>
 <pre><code class="language-nix">preservation.preserveAt."/persistent".users.alice.directories = [
