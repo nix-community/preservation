@@ -20,8 +20,10 @@ jobs:
         run: nix flake check --log-format raw-with-logs --no-build ./tests
       - name: default test
         run: nix build --log-format raw-with-logs -L ./tests#checks.x86_64-linux.default
-      - name: firstboot test
-        run: nix build --log-format raw-with-logs -L ./tests#checks.x86_64-linux.firstboot
+      - name: firstboot-bind-mount test
+        run: nix build --log-format raw-with-logs -L ./tests#checks.x86_64-linux.firstboot-bind-mount
+      - name: firstboot-symlink test
+        run: nix build --log-format raw-with-logs -L ./tests#checks.x86_64-linux.firstboot-symlink
 
 env:
   FORCE_COLOR: 1

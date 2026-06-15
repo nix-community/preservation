@@ -17,9 +17,19 @@ pkgs:
         enable = true;
         preserveAt."/persistent" = {
           files = [
-            { file = "/etc/machine-id"; inInitrd = true; how = "symlink"; configureParent = true; }
+            {
+              file = "/etc/machine-id";
+              inInitrd = true;
+              how = "symlink";
+              configureParent = true;
+              createLinkTarget = false;
+            }
           ];
         };
+      };
+
+      boot.initrd.systemd.tmpfiles.settings.machine-id."/sysroot/persistent/etc/machine-id".f = {
+        argument = "uninitialized";
       };
 
       systemd.services.systemd-machine-id-commit = {
@@ -82,31 +92,27 @@ pkgs:
         passwordFilesLocation = "/persistent/etc";
       };
 
+      fileSystems = {
+        "/" = {
+          fsType = "tmpfs";
+          options = [ "mode=0755" ];
+        };
+        "/persistent" = {
+          device = "/dev/vdb";
+          fsType = "ext4";
+          neededForBoot = true;
+          autoFormat = true;
+        };
+      };
+
       virtualisation = {
         memorySize = 2048;
         emptyDiskImages = [ 23 ];
         directBoot.enable = false;
         mountHostNixStore = false;
         useEFIBoot = true;
-        fileSystems = lib.mkVMOverride {
-          "/" = {
-            fsType = "tmpfs";
-            options = [ "mode=0755" ];
-          };
-          "/nix/store" = {
-            device = "/usr/nix/store";
-            options = [ "bind" ];
-          };
-          "/persistent" = {
-            device = "/dev/vdb";
-            fsType = "ext4";
-            neededForBoot = true;
-            autoFormat = true;
-          };
-        };
+        fileSystems = lib.mkVMOverride { };
       };
-
-      nixpkgs.hostPlatform = pkgs.stdenv.hostPlatform;
     };
 
   testScript =
@@ -125,7 +131,7 @@ pkgs:
         "-f",
         "qcow2",
         "-b",
-        "${nodes.machine.system.build.finalImage}/${nodes.machine.image.fileName}",
+        "${nodes.machine.system.build.image}/${nodes.machine.image.fileName}",
         "-F",
         "raw",
         tmp_disk_image.name,
@@ -152,6 +158,8 @@ pkgs:
       with subtest("Machine ID linked and populated"):
         machine.succeed("test -L /etc/machine-id")
         machine.succeed("test -s /persistent/etc/machine-id")
+        machine_id = machine.succeed("cat /etc/machine-id")
+        t.assertNotEqual("uninitialized", machine_id, "machine id not populated")
 
       with subtest("Machine ID persisted"):
         first_id = machine.succeed("cat /etc/machine-id")

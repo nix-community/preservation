@@ -128,6 +128,7 @@ in
     /* python */
     ''
       import json
+      import os
 
       initrd_files = json.loads('${initrdJSON}')
       all_files = json.loads('${allJSON}')

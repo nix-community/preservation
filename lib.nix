@@ -406,6 +406,11 @@ rec {
         ];
         unitConfig.DefaultDependencies = "no";
         conflicts = [ "umount.target" ];
+        after =
+          if forInitrd then
+            [ "systemd-tmpfiles-setup-preservation.service" ]
+          else
+            [ "systemd-tmpfiles-setup-preservation.service" ];
         wantedBy =
           if forInitrd then
             [
@@ -418,7 +423,6 @@ rec {
         before =
           if forInitrd then
             [
-              # directory mounts are set up before tmpfiles
               "systemd-tmpfiles-setup-sysroot.service"
               "initrd-preservation.target"
             ]
@@ -457,11 +461,21 @@ rec {
         conflicts = [ "umount.target" ];
         after =
           if forInitrd then
-            [ "systemd-tmpfiles-setup-sysroot.service" ]
+            [ "systemd-tmpfiles-setup-preservation.service" ]
           else
-            [ "systemd-tmpfiles-setup.service" ];
+            [ "systemd-tmpfiles-setup-preservation.service" ];
         wantedBy = if forInitrd then [ "initrd-preservation.target" ] else [ "preservation.target" ];
-        before = if forInitrd then [ "initrd-preservation.target" ] else [ "preservation.target" ];
+        before =
+          if forInitrd then
+            [
+              "systemd-tmpfiles-setup-sysroot.service"
+              "initrd-preservation.target"
+            ]
+          else
+            [
+              "systemd-tmpfiles-setup.service"
+              "preservation.target"
+            ];
       }) mountedFiles;
 
       mountUnits = directoryMounts ++ fileMounts;
@@ -473,4 +487,84 @@ rec {
   mkInitrdMountUnits = mkMountUnits true;
   mkRegularTmpfilesRules = mkTmpfilesRules false;
   mkInitrdTmpfilesRules = mkTmpfilesRules true;
+
+  mkInitrdTmpfilesService = configPath: persistentStoragePaths: {
+    wantedBy = [ "initrd-preservation.target" ];
+    before = [
+      "initrd.target"
+      "shutdown.target"
+      "initrd-switch-root.target"
+      "systemd-tmpfiles-setup-sysroot.service"
+      "initrd-preservation.target"
+    ];
+    conflicts = [
+      "shutdown.target"
+      "initrd-switch-root.target"
+    ];
+    unitConfig = {
+      DefaultDependencies = false;
+      RefuseManualStop = true;
+      RequiresMountsFor = map (concatTwoPaths "/sysroot") ([ "/etc" ] ++ persistentStoragePaths);
+    };
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "systemd-tmpfiles --create --remove --boot ${configPath}";
+      SuccessExitStatus = "DATAERR CANTCREAT";
+      ImportCredential = [
+        "tmpfiles.*"
+        "login.motd"
+        "login.issue"
+        "network.hosts"
+        "ssh.authorized_keys.root"
+      ];
+    };
+  };
+
+  mkRegularTmpfilesService = onBoot: configPath: persistentStoragePaths: restartTrigger: {
+    wantedBy = lib.optionals onBoot [ "preservation.target" ];
+    requiredBy = lib.optionals (!onBoot) [ "sysinit-reactivation.target" ];
+    after = [
+      "systemd-sysusers.service"
+      "systemd-journald.service"
+    ];
+    before = [
+      "shutdown.target"
+    ]
+    ++ lib.optionals onBoot [
+      "sysinit.target"
+      "initrd-switch-root.target"
+      "systemd-tmpfiles-setup.service"
+      "preservation.target"
+    ]
+    ++ lib.optionals (!onBoot) [
+      "sysinit-reactivation.target"
+      "systemd-tmpfiles-resetup.service"
+    ];
+    conflicts = [
+      "shutdown.target"
+    ]
+    ++ lib.optionals onBoot [
+      "initrd-switch-root.target"
+    ];
+    restartTriggers = lib.optionals (!onBoot) [ restartTrigger ];
+    unitConfig = {
+      DefaultDependencies = false;
+      RefuseManualStop = onBoot;
+      RequiresMountsFor = persistentStoragePaths;
+    };
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "systemd-tmpfiles --create --remove ${lib.optionalString onBoot "--boot"} ${configPath}";
+      SuccessExitStatus = "DATAERR CANTCREAT";
+      ImportCredential = [
+        "tmpfiles.*"
+        "login.motd"
+        "login.issue"
+        "network.hosts"
+        "ssh.authorized_keys.root"
+      ];
+    };
+  };
 }

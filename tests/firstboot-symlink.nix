@@ -1,6 +1,6 @@
 pkgs:
 {
-  name = "preservation-firstboot";
+  name = "preservation-firstboot-symlink";
 
   nodes.machine =
     { pkgs, ... }:
@@ -9,19 +9,29 @@ pkgs:
 
       preservation = {
         enable = true;
-        preserveAt."/state" = {
+        preserveAt."/persistent" = {
           files = [
-            { file = "/etc/machine-id"; inInitrd = true; how = "symlink"; configureParent = true; }
+            {
+              file = "/etc/machine-id";
+              inInitrd = true;
+              how = "symlink";
+              configureParent = true;
+              createLinkTarget = false;
+            }
           ];
         };
       };
 
+      boot.initrd.systemd.tmpfiles.settings.machine-id."/sysroot/persistent/etc/machine-id".f = {
+        argument = "uninitialized";
+      };
+
       systemd.services.systemd-machine-id-commit = {
         unitConfig.ConditionPathIsMountPoint = [
-          "" "/state/etc/machine-id"
+          "" "/persistent/etc/machine-id"
         ];
         serviceConfig.ExecStart = [
-          "" "systemd-machine-id-setup --commit --root /state"
+          "" "systemd-machine-id-setup --commit --root /persistent"
         ];
       };
 
@@ -34,7 +44,7 @@ pkgs:
         memorySize = 2048;
         # separate block device for preserved state
         emptyDiskImages = [ 23 ];
-        fileSystems."/state" = {
+        fileSystems."/persistent" = {
           device = "/dev/vdb";
           fsType = "ext4";
           neededForBoot = true;
@@ -56,7 +66,9 @@ pkgs:
 
       with subtest("Machine ID linked and populated"):
         machine.succeed("test -L /etc/machine-id")
-        machine.succeed("test -s /state/etc/machine-id")
+        machine.succeed("test -s /persistent/etc/machine-id")
+        machine_id = machine.succeed("cat /etc/machine-id")
+        t.assertNotEqual("uninitialized", machine_id, "machine id not populated")
 
       with subtest("Machine ID persisted"):
         first_id = machine.succeed("cat /etc/machine-id")

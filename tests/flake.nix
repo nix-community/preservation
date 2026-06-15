@@ -16,9 +16,10 @@
         perSystem = { pkgs, ... }:
           {
             checks = {
-              default = pkgs.nixosTest (import ./basic.nix pkgs);
-              firstboot = pkgs.nixosTest (import ./firstboot.nix pkgs);
-              verity-image = pkgs.nixosTest (import ./appliance-image-verity.nix pkgs);
+              default = pkgs.testers.runNixOSTest (import ./basic.nix pkgs);
+              firstboot-bind-mount = pkgs.testers.runNixOSTest (import ./firstboot-bind-mount.nix pkgs);
+              firstboot-symlink = pkgs.testers.runNixOSTest (import ./firstboot-symlink.nix pkgs);
+              verity-image = pkgs.testers.runNixOSTest (import ./appliance-image-verity.nix pkgs);
             };
           };
       };
