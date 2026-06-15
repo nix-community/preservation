@@ -40,11 +40,16 @@ See [Configuration Options](./configuration-options.md) for all available option
 
 ## Compatibility with systemd's `ConditionFirstBoot`
 
-In this example the machine-id is preserved on the persistent volume via symlink
-instead of a bind-mount. The option `configureParent` causes the parent directory
-of the symlink's target, i.e. `/persistent/etc/` to be created.
-Additionally, `systemd-machine-id-commit.service` is adapted to persist the tmpfs
-mount created by system to the persistent volume.
+To preserve correct [systemd first boot semantics](https://www.freedesktop.org/software/systemd/man/latest/machine-id.html#First%20Boot%20Semantics),
+additional configuration is required.
+
+The following two configuration examples are compatible with first boot semantics.
+
+### Symlink approach
+
+Since systemd v258, systemd no longer creates missing symlink targets automatically
+(see [this issue](https://github.com/nix-community/preservation/issues/22)).
+Therefore, the target must exist ahead of time and contain an `uninitialized` machine-id.
 
 ```nix
 # configuration.nix
@@ -60,7 +65,13 @@ mount created by system to the persistent volume.
     preserveAt."/persistent" = {
       files = [
         # auto-generated machine ID
-        { file = "/etc/machine-id"; inInitrd = true; how = "symlink"; configureParent = true; }
+        {
+          file = "/etc/machine-id";
+          inInitrd = true;
+          how = "symlink";
+          configureParent = true;
+          createLinkTarget = true;
+        }
         # ...
       ];
       directories = [
@@ -69,11 +80,9 @@ mount created by system to the persistent volume.
     };
   };
 
-  # systemd-machine-id-commit.service would fail, but it is not relevant
-  # in this specific setup for a persistent machine-id so we disable it
-  #
-  # see the firstboot example below for an alternative approach
-  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+  boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/persistent/etc/machine-id".f = {
+    argument = "uninitialized";
+  };
 
   # let the service commit the transient ID to the persistent volume
   systemd.services.systemd-machine-id-commit = {
@@ -89,6 +98,48 @@ mount created by system to the persistent volume.
 }
 ```
 
+
+### Bind-mount approach
+
+Alternatively, one can use a bind-mount. As with the symlink approach, the target
+must exist ahead of time and contain an `uninitialized` machine-id.
+
+However, note that since `/etc/machine-id` becomes a bind-mounted path,
+`systemd-machine-id-commit` will see `ConditionPathIsMountPoint=/etc/machine-id`
+as true on every boot.
+
+To avoid committing on every boot, `ConditionFirstBoot=true` must be added.
+
+```nix
+# configuration.nix
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  preservation = {
+    enable = true;
+    preserveAt."/persistent" = {
+      files = [
+        # auto-generated machine ID
+        { file = "/etc/machine-id"; inInitrd = true; }
+        # ...
+      ];
+      directories = [
+        # ...
+      ];
+    };
+  };
+
+  boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/persistent/etc/machine-id".f = {
+    argument = "uninitialized";
+  };
+
+  systemd.services.systemd-machine-id-commit.unitConfig.ConditionFirstBoot = true;
+}
+```
 
 
 ## Complex
