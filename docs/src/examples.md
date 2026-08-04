@@ -44,7 +44,13 @@ In this example the machine-id is preserved on the persistent volume via symlink
 instead of a bind-mount. The option `configureParent` causes the parent directory
 of the symlink's target, i.e. `/persistent/etc/` to be created.
 Additionally, `systemd-machine-id-commit.service` is adapted to persist the tmpfs
-mount created by system to the persistent volume.
+mount created by systemd to the persistent volume.
+
+> **Note:** Unlike in the [Simple](#simple) example,
+> `systemd-machine-id-commit.service` must **not** be added to
+> `systemd.suppressedSystemUnits` here. That option removes the unit from the
+> generated systemd configuration entirely, which would also discard the override
+> below and leave the transient machine-id uncommitted.
 
 ```nix
 # configuration.nix
@@ -69,13 +75,7 @@ mount created by system to the persistent volume.
     };
   };
 
-  # systemd-machine-id-commit.service would fail, but it is not relevant
-  # in this specific setup for a persistent machine-id so we disable it
-  #
-  # see the firstboot example below for an alternative approach
-  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
-
-  # let the service commit the transient ID to the persistent volume
+  # adapt the stock service to commit the transient ID to the persistent volume
   systemd.services.systemd-machine-id-commit = {
     unitConfig.ConditionPathIsMountPoint = [
       ""
