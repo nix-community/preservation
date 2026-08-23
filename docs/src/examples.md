@@ -22,8 +22,9 @@ See [Configuration Options](./configuration-options.md) for all available option
       ];
       directories = [
         "/var/lib/systemd/timers"
-        # NixOS user state
-        "/var/lib/nixos"
+        # NixOS user state, read by the activation script before systemd
+        # mounts anything, hence `inInitrd`
+        { directory = "/var/lib/nixos"; inInitrd = true; }
         "/var/log"
       ];
     };

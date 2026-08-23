@@ -155,6 +155,10 @@ let
 
             ::: {.note}
             For most directories there is no need to enable this option.
+
+            {file}`/var/lib/nixos` is an exception because it is read and
+            written by the system activation script, which runs before
+            systemd mounts anything.
             :::
 
             ::: {.important}
