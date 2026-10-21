@@ -78,7 +78,6 @@ in
 
       testing.initrdBackdoor = true;
       boot.initrd.systemd = {
-        enable = true;
         extraBin = {
           mountpoint = "${pkgs.util-linux}/bin/mountpoint";
         };

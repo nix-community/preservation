@@ -73,8 +73,6 @@ pkgs:
         };
       };
 
-      boot.initrd.systemd.enable = true;
-
       networking.useNetworkd = true;
 
       services.userborn = {

@@ -25,9 +25,6 @@ pkgs:
         ];
       };
 
-      # test-specific configuration below
-      boot.initrd.systemd.enable = true;
-
       networking.useNetworkd = true;
 
       virtualisation = {
