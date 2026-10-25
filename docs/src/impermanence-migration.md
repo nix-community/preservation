@@ -163,3 +163,22 @@ systemd.tmpfiles.settings.preservation = {
 
 See [tmpfiles.d(5)](https://www.freedesktop.org/software/systemd/man/latest/tmpfiles.d.html)
 for available configuration options.
+
+### Applying the migration
+
+Apply the first configuration that uses Preservation instead of impermanence with
+`nixos-rebuild boot` and a reboot, rather than with `nixos-rebuild switch`.
+
+On a switch, NixOS stops the units and unmounts the filesystems of the running system
+that the new configuration no longer declares. After the migration, that is everything
+impermanence set up:
+
+- Each persisted file has a `persist-*.service` unit. Stopping it runs its `ExecStop`,
+  which removes the symlink, or unmounts and removes the bind-mounted file, at the file's
+  path, e.g. `/etc/machine-id`.
+- Each persisted directory is a bind mount, declared in `/etc/fstab` or, in impermanence
+  since September 2025, as a mount unit, and is unmounted.
+
+Entries with `inInitrd = true`, such as `/etc/machine-id` or `/var/log`, are only set up
+in the initrd, so they stay missing from the running system until the next boot. A
+directory that is in use can also fail to unmount, which fails the switch.
