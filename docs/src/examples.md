@@ -23,7 +23,7 @@ See [Configuration Options](./configuration-options.md) for all available option
       directories = [
         "/var/lib/systemd/timers"
         # NixOS user state
-        "/var/lib/nixos"
+        { directory = "/var/lib/nixos"; inInitrd = true; }
         "/var/log"
       ];
     };
