@@ -41,7 +41,7 @@ let
             "symlink"
             "_intermediate" # TODO find a better name. maybe "structure"?
           ];
-          default = "bindmount";
+          default = config.preservation.defaultHow;
           description = ''
             Specify how this directory should be preserved.
 
@@ -188,7 +188,7 @@ let
             "bindmount"
             "symlink"
           ];
-          default = "bindmount";
+          default = config.preservation.defaultHow;
           description = ''
             Specify how this file should be preserved:
 
@@ -550,6 +550,18 @@ in
 {
   options.preservation = {
     enable = lib.mkEnableOption "the preservation module";
+
+    defaultHow = lib.mkOption {
+      type = lib.types.enum [
+        "bindmount"
+        "symlink"
+      ];
+      default = "bindmount";
+      description = ''
+        Specify the default value of the `how` option for all preserved files
+        and directories.
+      '';
+    };
 
     preserveAt = lib.mkOption {
       type =
