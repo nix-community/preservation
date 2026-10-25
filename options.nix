@@ -354,11 +354,11 @@ let
             definedDirectories:
             let
               intermediateDirectorySettings = {
-                how = "_intermediate";
-                configureParent = false;
-                user = attrs.config.username;
-                group = config.users.users.${attrs.config.username}.group;
-                mode = "0755";
+                how = lib.mkDefault "_intermediate";
+                configureParent = lib.mkDefault  false;
+                user = lib.mkDefault attrs.config.username;
+                group = lib.mkDefault config.users.users.${attrs.config.username}.group;
+                mode = lib.mkDefault "0755";
               };
               allDirectories =
                 mkIntermediateUserDirectories intermediateDirectorySettings attrs.config.files attrs.config.home
