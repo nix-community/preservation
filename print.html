@@ -1143,7 +1143,7 @@ string, not containing newlines or colons</p>
       directories = [
         "/var/lib/systemd/timers"
         # NixOS user state
-        "/var/lib/nixos"
+        { directory = "/var/lib/nixos"; inInitrd = true; }
         "/var/log"
       ];
     };

@@ -180,7 +180,7 @@
       directories = [
         "/var/lib/systemd/timers"
         # NixOS user state
-        "/var/lib/nixos"
+        { directory = "/var/lib/nixos"; inInitrd = true; }
         "/var/log"
       ];
     };
