@@ -31,6 +31,10 @@ pkgs:
         ];
       };
 
+      boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/persistent/etc/machine-id".f = {
+        argument = "uninitialized";
+      };
+
       system = {
         name = "preservation-verity";
         image = {

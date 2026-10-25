@@ -25,6 +25,10 @@ pkgs:
         ];
       };
 
+      boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/state/etc/machine-id".f = {
+        argument = "uninitialized";
+      };
+
       networking.useNetworkd = true;
 
       virtualisation = {
