@@ -16,13 +16,6 @@ in
   ];
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.boot.initrd.systemd.enable;
-        message = "This module cannot be used with scripted initrd.";
-      }
-    ];
-
     boot.initrd.systemd = {
       targets.initrd-preservation = {
         description = "Initrd Preservation Mounts";

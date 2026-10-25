@@ -31,6 +31,10 @@ pkgs:
         ];
       };
 
+      boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/persistent/etc/machine-id".f = {
+        argument = "uninitialized";
+      };
+
       system = {
         name = "preservation-verity";
         image = {
@@ -42,7 +46,17 @@ pkgs:
       };
 
       image.repart = {
+        enable = true;
         verityStore.enable = true;
+
+        # looks like since v262 repart uses the sector size as erofs block size[1], and libblkid
+        # doesn't detect erofs with bs <=1024
+        # https://github.com/systemd/systemd/commit/23058066e6c02fad124e9ad8c71d0854440bd586
+        # https://github.com/util-linux/util-linux/commit/a5f0864e2bc50ae305a32dd4d303742d6e573d02
+        #
+        # workaround can be droped once fix hits nixpkgs:
+        # https://github.com/util-linux/util-linux/commit/4f4105ea201eb069a96a3c983ae1e83afb0d8558
+        mkfsOptions.erofs = [ "-b4096" ];
 
         inherit (config.system) name;
 
@@ -73,8 +87,6 @@ pkgs:
         };
       };
 
-      boot.initrd.systemd.enable = true;
-
       networking.useNetworkd = true;
 
       services.userborn = {
@@ -94,6 +106,7 @@ pkgs:
             options = [ "mode=0755" ];
           };
           "/nix/store" = {
+            fsType = "none";
             device = "/usr/nix/store";
             options = [ "bind" ];
           };
@@ -125,7 +138,7 @@ pkgs:
         "-f",
         "qcow2",
         "-b",
-        "${nodes.machine.system.build.finalImage}/${nodes.machine.image.fileName}",
+        "${nodes.machine.system.build.image}/${nodes.machine.image.fileName}",
         "-F",
         "raw",
         tmp_disk_image.name,

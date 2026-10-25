@@ -25,8 +25,9 @@ pkgs:
         ];
       };
 
-      # test-specific configuration below
-      boot.initrd.systemd.enable = true;
+      boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/state/etc/machine-id".f = {
+        argument = "uninitialized";
+      };
 
       networking.useNetworkd = true;
 

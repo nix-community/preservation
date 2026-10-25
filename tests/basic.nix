@@ -78,7 +78,6 @@ in
 
       testing.initrdBackdoor = true;
       boot.initrd.systemd = {
-        enable = true;
         extraBin = {
           mountpoint = "${pkgs.util-linux}/bin/mountpoint";
         };
@@ -127,6 +126,7 @@ in
     # (for syntax highlighting)
     /* python */
     ''
+      import os
       import json
 
       initrd_files = json.loads('${initrdJSON}')
