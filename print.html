@@ -163,8 +163,9 @@
 meant to be a drop-in replacement.</p>
 <h2 id="documentation"><a class="header" href="#documentation">Documentation</a></h2>
 <p>Docs are available at <a href="https://nix-community.github.io/preservation">https://nix-community.github.io/preservation</a></p>
-<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
-<p>Requires at least nixos-24.11</p>
+<h2 id="compatibility-with-nixpkgs"><a class="header" href="#compatibility-with-nixpkgs">Compatibility with nixpkgs</a></h2>
+<p>This module aims to be compatible with <code>nixos-unstable</code>.
+Feel free to open an issue if that is not the case.</p>
 <h2 id="why"><a class="header" href="#why">Why?</a></h2>
 <p>This aims to provide a declarative state management solution for NixOS systems without resorting to
 interpreters to do the heavy lifting. This should enable impermanence-like state management on
@@ -1160,6 +1161,7 @@ string, not containing newlines or colons</p>
 <p>In this example the machine-id is preserved on the persistent volume via symlink
 instead of a bind-mount. The option <code>configureParent</code> causes the parent directory
 of the symlink's target, i.e. <code>/persistent/etc/</code> to be created.
+The target file is created with the content <code>uninitalized</code>, to satisfy the firstboot condition.
 Additionally, <code>systemd-machine-id-commit.service</code> is adapted to persist the tmpfs
 mount created by system to the persistent volume.</p>
 <pre><code class="language-nix"># configuration.nix
@@ -1184,11 +1186,11 @@ mount created by system to the persistent volume.</p>
     };
   };
 
-  # systemd-machine-id-commit.service would fail, but it is not relevant
-  # in this specific setup for a persistent machine-id so we disable it
-  #
-  # see the firstboot example below for an alternative approach
-  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+  # when the file does not exist yet, it is initialized with the string "uninitialized"
+  # to satisfy the firstboot condition
+  boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/state/etc/machine-id".f = {
+    argument = "uninitialized";
+  };
 
   # let the service commit the transient ID to the persistent volume
   systemd.services.systemd-machine-id-commit = {
