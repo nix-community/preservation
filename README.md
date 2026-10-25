@@ -9,9 +9,10 @@ meant to be a drop-in replacement.
 
 Docs are available at <https://nix-community.github.io/preservation>
 
-## Prerequisites
+## Compatibility with nixpkgs
 
-Requires at least nixos-24.11
+This module aims to be compatible with `nixos-unstable`.
+Feel free to open an issue if that is not the case.
 
 ## Why?
 
