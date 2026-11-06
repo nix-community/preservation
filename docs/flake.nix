@@ -5,13 +5,12 @@
     packages.x86_64-linux =
       let
         pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-      in
-      {
-        optionsManualMD =
+
+        mkOptionsManualMD =
+          modules:
           let
             eval = pkgs.lib.evalModules {
-              modules = [
-                ../options.nix
+              modules = modules ++ [
                 (args: {
                   options._module.args = args.lib.mkOption { internal = true; };
                 })
@@ -41,6 +40,11 @@
             };
           in
           optionsDoc.optionsCommonMark;
+      in
+      {
+        optionsManualMD = mkOptionsManualMD [ ../options.nix ];
+
+        homeManagerOptionsManualMD = mkOptionsManualMD [ ../home-manager-module.nix ];
 
         docs = pkgs.stdenv.mkDerivation {
           name = "preservation-docs";
@@ -48,6 +52,11 @@
           nativeBuildInputs = [ pkgs.mdbook ];
           patchPhase = ''
             cat ${inputs.self.packages.x86_64-linux.optionsManualMD} > docs/src/configuration-options.md
+            {
+              echo "# Home Manager Options"
+              echo
+              cat ${inputs.self.packages.x86_64-linux.homeManagerOptionsManualMD}
+            } > docs/src/home-manager-options.md
             cp README.md docs/src
           '';
           buildPhase = ''

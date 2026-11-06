@@ -13,6 +13,7 @@ in
 {
   imports = [
     ./options.nix
+    ./home-manager.nix
   ];
 
   config = lib.mkIf cfg.enable {

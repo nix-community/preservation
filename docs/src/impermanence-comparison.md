@@ -4,7 +4,8 @@
 
 Preservation tries to fill a specific niche.
 For instance, Preservation does not support non-NixOS systems via home-manager, which is supported
-by impermanence. See [Migration](./impermanence-migration.md) for more technical details.
+by impermanence. Home Manager used as a NixOS module is supported, see [Home Manager](./home-manager.md).
+See [Migration](./impermanence-migration.md) for more technical details.
 
 ### Preservation only generates static configuration
 
